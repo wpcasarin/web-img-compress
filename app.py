@@ -1,7 +1,7 @@
 import os
 import secrets
 from static.python.img_process import process_img
-from flask import Flask, request, redirect, render_template, flash
+from flask import Flask, request, redirect, render_template, flash, send_file
 
 UPLOAD_FOLDER = ("static/uploads")
 ALLOWED_EXTENSIONS = {".png", ".jpg", ".jpeg"}
@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024
 app.config["SECRET_KEY"] = secrets.token_urlsafe(32)
-
+app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0  # disable cache
 
 
 @app.route("/")
@@ -26,30 +26,28 @@ def upload_image():
         if request.files:
             img = request.files["uploads"]
             quality = int(request.form["quality"])
-            
             filename, file_extension = os.path.splitext(img.filename)
             if file_extension not in ALLOWED_EXTENSIONS:
                 flash("Invalid file extension.")
                 return redirect("/")
-            path = os.path.join(app.config["UPLOAD_FOLDER"], f"input{file_extension}")
+            path = os.path.join(
+                app.config["UPLOAD_FOLDER"], f"input{file_extension}")
             img.save(path)
             process_img(path, file_extension, quality)
-            return redirect("/")
-            
+            return redirect("/imageview")
+
+
 @app.route("/download")
 def download_image():
-    
-    
-    return
-
+    path = ("static/downloads/output.jpg")
+    return send_file(path, as_attachment=True)
 
 
 @app.route("/imageview")
 def image_view():
-    return render_template("image_view.html", result="static/output/test.jpg")
+    return render_template("image_view.html", result="static/downloads/output.jpg")
 
 
 # run the flask server
 if __name__ == "__main__":
     app.run(debug=True)
-

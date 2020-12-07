@@ -4,10 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Image View</title>
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <script src="../static/js/image_compare.js"></script>
   </head>
   <body>
-    <div>
-      <img src="{{result}}" />
+    <!-- after -->
+    <div class="img-comp-container">
+      <div class="img-comp-img">
+        <img src="../static/downloads/output.jpg" width="300" height="200" />
+      </div>
+      <!-- before -->
+      <div class="img-comp-img img-comp-overlay">
+        <img src="../static/uploads/input.jpg" width="300" height="200" />
+      </div>
+    </div>
+    <div id="downloadButton">
+    <a href="{{ url_for(".download_image") }}"><button>Download</button></a>
     </div>
   </body>
 </html>
