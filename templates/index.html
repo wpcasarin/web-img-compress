@@ -4,32 +4,40 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="../static/css/style.css">
-    <script src="../static/js/slider.js"></script>
+    <link rel="stylesheet" href="../static/css/style.css" />
+    <script src="../static/js/scripts.js"></script>
   </head>
   <body>
-    <form method="post" action="/upload" enctype="multipart/form-data">
-        <p>
-          <input type="file" name="uploads" autocomplete="off" accept=".jpg, .jpeg, .png" required />
-        </p>
-      <p>
+    <div class="mainFrame">
+      <form method="post" action="/upload" enctype="multipart/form-data">
+        <input
+          class="hidden"
+          type="file"
+          name="uploads"
+          autocomplete="off"
+          accept=".jpg, .jpeg, .png"
+          id="browserInput"
+          onchange="getName()"
+          required
+        />
+
+        <button type="button" onclick="openBrowser()">Upload File</button>
         <button type="submit">Submit</button>
-      </p>
-      <div class="slidecontainer">
-        <input type="range" min="1" max="100" value="50" class="slider" id="slider" name="quality">
-      </div>
-    </form>
-    <div>
-      <p>Value: <span id="sliderValue"></span></p>
-    </div>
-    <div id="messageOut">
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
-         {% for message in messages %}
-            {{ message }}
-         {% endfor %}
-      {% endif %}
-   {% endwith %}
+        <div id="inputFileName">No file selected.</div>
+
+        <div class="slidecontainer">
+          <input
+            type="range"
+            min="1"
+            max="100"
+            value="50"
+            class="slider"
+            id="slider"
+            name="quality"
+          />
+          Value: <span id="sliderValue"></span>
+        </div>
+      </form>
     </div>
   </body>
 </html>

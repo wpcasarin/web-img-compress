@@ -1,0 +1,4 @@
+/templates/message.html
+/static/python/__pycache__
+/static/downloads/**
+/static/uploads/**

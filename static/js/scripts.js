@@ -7,3 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
     output.innerHTML = this.value;
   };
 });
+
+function openBrowser() {
+  document.getElementById("browserInput").click();
+}
+
+function getName() {
+  let fileName = document.querySelector("input[type=file]").files[0].name;
+  document.getElementById("inputFileName").innerHTML = fileName;
+}
